@@ -1,4 +1,4 @@
-# Data Driven Framework
+# DDT-updates
 
 ## General info
 This project is for training purposes.
