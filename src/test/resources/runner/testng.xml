@@ -4,9 +4,16 @@
 
 	<listeners>
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />
-		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+		<listener class-name="extentlisteners.ExtentListeners" />
 		<listener class-name="listeners.CustomListeners" />
 	</listeners>
+
+	<test thread-count="5" name="Test">
+		<classes>
+			<class name="rough.TestExtentReports" />
+		</classes>
+	</test> <!-- Test -->
+
 	<test thread-count="5" name="Bank Manager Login Test">
 		<classes>
 			<class name="testcases.BankManagerLoginTest" />
