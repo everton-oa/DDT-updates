@@ -18,6 +18,7 @@ public class OpenAccountTest extends TestBase {
 		if (data.get("runmode").equalsIgnoreCase("N"))
 			throw new SkipException("openAccountTest".toUpperCase() + " - Test Case Skipped: Run mode is No");
 
+		click("bankManagerLoginBtn_CSS");
 		click("openAccountBtn_CSS");
 		select("customerNameDd_ID", data.get("customer"));
 		select("currencyDd_ID", data.get("currency"));

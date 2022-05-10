@@ -4,14 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
+import com.relevantcodes.extentreports.ExtentReports;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import com.aventstack.extentreports.reporter.configuration.Theme;
 
 import base.TestBase;
 
@@ -20,21 +18,8 @@ public class ExtentManager {
     private static ExtentReports extent;
     public static String fileName;
 
-    public static ExtentReports createInstance(String fileName) {
-        ExtentSparkReporter htmlReporter = new ExtentSparkReporter(fileName);
+    public static void createInstance(String fileName) {
 
-        htmlReporter.config().setTheme(Theme.STANDARD);
-        htmlReporter.config().setDocumentTitle(fileName);
-        htmlReporter.config().setEncoding("utf-8");
-        htmlReporter.config().setReportName(fileName);
-
-        extent = new ExtentReports();
-        extent.attachReporter(htmlReporter);
-        extent.setSystemInfo("Automation Tester", "Everton Araujo");
-        extent.setSystemInfo("Organization", "Automation .Co");
-        extent.setSystemInfo("Build no", "1234");
-
-        return extent;
     }
 
     public static void captureScreenshot() throws IOException {
