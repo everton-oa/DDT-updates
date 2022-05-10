@@ -1,13 +1,5 @@
 package base;
 
-import static org.testng.Assert.assertEquals;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Properties;
-import java.util.concurrent.TimeUnit;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -20,30 +12,19 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
-
-import com.relevantcodes.extentreports.ExtentReports;
-import com.relevantcodes.extentreports.ExtentTest;
-import com.relevantcodes.extentreports.LogStatus;
-
 import utilities.ExcelReader;
 import utilities.ExtentManager;
 import utilities.TestUtil;
 
-public class TestBase {
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
-	/*
-	 * 
-	 * WebDriver 
-	 * Properties 
-	 * Logs 
-	 * ExtentReports
-	 * ReportNG 
-	 * DB 
-	 * Excel 
-	 * Mail
-	 * Jenkins
-	 * 
-	 */
+import static org.testng.Assert.assertEquals;
+
+public class TestBase {
 
 	public static WebDriver driver;
 	public static Properties config = new Properties();
@@ -52,8 +33,6 @@ public class TestBase {
 	public static Logger log = Logger.getLogger("devpinoyLogger");
 	public static ExcelReader excel = new ExcelReader(System.getProperty("user.dir") + "/src/test/resources/excel/testdata.xlsx");
 	public static WebDriverWait wait;
-	public ExtentReports rep = ExtentManager.getInstance();
-	public static ExtentTest test;
 
 	@BeforeSuite
 	public void setUp() {
@@ -124,7 +103,7 @@ public class TestBase {
 		} else if (locator.endsWith("_ID")) {
 			driver.findElement(By.id(OR.getProperty(locator))).click();
 		}
-		test.log(LogStatus.INFO, "Clicked on " + locator);
+//		test.log(LogStatus.INFO, "Clicked on " + locator);
 	}
 	
 	public void type(String locator, String value) {
@@ -135,7 +114,7 @@ public class TestBase {
 		} else if (locator.endsWith("_ID")) {
 			driver.findElement(By.id(OR.getProperty(locator))).sendKeys(value);
 		}
-		test.log(LogStatus.INFO, "Typed "+value+" on " +locator);
+//		test.log(LogStatus.INFO, "Typed "+value+" on " +locator);
 	}
 	
 	static WebElement dropdown;
@@ -152,7 +131,7 @@ public class TestBase {
 		Select select = new Select(dropdown);
 		select.selectByVisibleText(value);
 		
-		test.log(LogStatus.INFO, "Selected "+value+" from " +locator);
+//		test.log(LogStatus.INFO, "Selected "+value+" from " +locator);
 	}
 	
 	public boolean isElementPresent(By by) {
@@ -174,11 +153,11 @@ public class TestBase {
 			TestUtil.captureScreenShot();
 			//ReportNg
 			Reporter.log("<br>"+"Verification failed - "+t.getMessage()+"<br>");
-			Reporter.log("<a target=\"_blank\" href=\""+TestUtil.screenShotName+"\"><img src="+TestUtil.screenShotName+" height=200 width=200></img></a>");
+//			Reporter.log("<a target=\"_blank\" href=\""+TestUtil.screenShotName+"\"><img src="+TestUtil.screenShotName+" height=200 width=200></img></a>");
 			Reporter.log("<br>");
 			//Extent Reports
-			test.log(LogStatus.FAIL, "Verification failed - "+t.getMessage());
-			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenShotName));
+//			test.log(LogStatus.FAIL, "Verification failed - "+t.getMessage());
+//			test.log(LogStatus.FAIL, test.addScreenCapture(TestUtil.screenShotName));
 		}
 	}
 	
