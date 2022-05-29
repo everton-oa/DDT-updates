@@ -1,31 +1,32 @@
 package testcases;
 
-import java.util.Hashtable;
-
+import base.TestBase;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.SkipException;
 import org.testng.annotations.Test;
-
-import base.TestBase;
+import pages.HomeLoginPage;
 import utilities.TestUtil;
+
+import java.util.Hashtable;
 
 public class OpenAccountTest extends TestBase {
 
-	@Test(dataProviderClass = TestUtil.class, dataProvider = "dp")
-	public void openAccountTest(Hashtable<String, String> data) {
+	HomeLoginPage homeLoginPage = new HomeLoginPage();
 
-		if (data.get("runmode").equalsIgnoreCase("N"))
-			throw new SkipException("openAccountTest".toUpperCase() + " - Test Case Skipped: Run mode is No");
-
-		click("bankManagerLoginBtn_CSS");
-		click("openAccountBtn_CSS");
-		select("customerNameDd_ID", data.get("customer"));
-		select("currencyDd_ID", data.get("currency"));
-		click("processBtn_CSS");
+	@Test (dataProviderClass = TestUtil.class, dataProvider = "dp")
+	public void openAccountTest (Hashtable<String, String> data) {
+//		if (!TestUtil.isTestRunnable("OpenAccountTest", excel)) {
+//			throw new SkipException("");
+//		}
+		homeLoginPage.openHomePageUrl(config.getProperty("testurl"))
+				.clickBankManagerLoginButton()
+				.clickOpenAccountButton()
+				.selectCustomerDropDown(data.get("customer"))
+				.selectCurrencyDropDown(data.get("currency"))
+				.clickProcessButton();
+		// TODO como utilizar o istestrunnable para fazer verificacao da tab testsuite e da tab do test
 
 		Alert alert = wait.until(ExpectedConditions.alertIsPresent());
-//		Assert.assertTrue(alert.getText().contains(alertText));
 		alert.accept();
 	}
 }
