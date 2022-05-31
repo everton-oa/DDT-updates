@@ -1,7 +1,5 @@
 package base;
 
-import com.relevantcodes.extentreports.ExtentReports;
-import com.relevantcodes.extentreports.ExtentTest;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -10,7 +8,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import utilities.DriverFactory;
 import utilities.ExcelReader;
-import utilities.ExtentManager;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -28,8 +25,6 @@ public class TestBase {
     public static Logger log = Logger.getLogger("devpinoyLogger");
     public static ExcelReader excel = new ExcelReader(System.getProperty("user.dir") + "/src/test/resources/excel/testdata.xlsx");
     public static WebDriverWait wait;
-    public static ExtentTest test;
-    public ExtentReports rep = ExtentManager.getInstance();
 
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_BLUE = "\u001B[34m";
