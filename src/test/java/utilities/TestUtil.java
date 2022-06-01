@@ -25,15 +25,15 @@ public class TestUtil extends TestBase {
 		File scrFile = ((TakesScreenshot)getDriver()).getScreenshotAs(OutputType.FILE);
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		screeshotName = simpleDateFormat.format(new Date())+".jpg";
-		screeshotPath = System.getProperty("user.dir") + "/target/surefire-reports/html/screenshot/";
+		screeshotPath = System.getProperty("user.dir") + "/target/screenshot/";
 		// TODO alterar separators para funcionar em qualquer sistema operacional
 //		screeshotPath = System.getProperty("user.dir") +File.separator+"target/surefire-reports/html/screenshot/";
 		FileUtils.copyFile(scrFile, new File(screeshotPath + screeshotName));
 
 //		test.log(LogStatus.INFO, "Screenshot captured");
 //		test.log(LogStatus.INFO, test.addScreenCapture("screenshot/" + TestUtil.screeshotName));
-		log.debug("Screenshot captured. -> target/surefire-reports/html/screenshot/" + screeshotName);
-		System.out.print(ANSI_RED + "Screenshot captured. -> target/surefire-reports/html/screenshot/" + screeshotName + "\n" + ANSI_RESET);
+		log.debug("Screenshot captured. -> target/screenshot/" + screeshotName);
+		System.out.print(ANSI_RED + "Screenshot captured. -> target/screenshot/" + screeshotName + "\n" + ANSI_RESET);
 	}
 	
 	@DataProvider(name="dp")
