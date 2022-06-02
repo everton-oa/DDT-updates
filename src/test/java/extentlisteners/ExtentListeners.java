@@ -32,22 +32,28 @@ public class ExtentListeners implements ITestListener {
     }
 
     public void onTestSuccess(ITestResult result) {
-        System.out.print(ANSI_GREEN + "====================> " + result.getName() + " successfully executed\n"+ ANSI_RESET);
         String logText = "<b>TEST CASE: " + result.getMethod().getMethodName() + " PASSED</b>";
         Markup markup = MarkupHelper.createLabel(logText, ExtentColor.GREEN);
         testReport.get().pass(markup);
+        System.out.print(ANSI_GREEN + "====================> " + result.getName() + " successfully executed\n"+ ANSI_RESET);
     }
 
     public void onTestFailure(ITestResult result) {
-        String exceptionMessage = Arrays.toString(result.getThrowable().getStackTrace());
-        testReport.get().fail("<details>" + "<summary>" + "<b>" + "<font color=" + "red>" + "Exception Occured: Click here to see"
-                + "</font>" + "</b >" + "</summary>" + exceptionMessage.replaceAll(",", "<br>") + "</details>" + " \n");
+        String failMessage = "<b>TEST CASE: " + result.getMethod().getMethodName() + " FAILED</b>";
         System.out.print(ANSI_RED + "(!) " + result.getName() + " FAILED\n"+ ANSI_RESET);
+        Markup markup = MarkupHelper.createLabel(failMessage, ExtentColor.RED);
+        testReport.get().log(Status.FAIL, markup);
+
         try {
             TestUtil.captureScreenShoot();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+        String exceptionMessage = Arrays.toString(result.getThrowable().getStackTrace());
+        testReport.get().info("<details>" + "<summary>" + "<b>" + "<font color=" + "red>" + "Exception Occured: Click here to see"
+                + "</font>" + "</b >" + "</summary>" + exceptionMessage.replaceAll(",", "<br>") + "</details>" + " \n");
 	/*	try {
 
 			ExtentManager.captureScreenshot();
@@ -58,9 +64,6 @@ public class ExtentListeners implements ITestListener {
 
 		}*/
 
-        String failureLogg = "<b>TEST CASE: " + result.getMethod().getMethodName() + " FAILED</b>";
-        Markup markup = MarkupHelper.createLabel(failureLogg, ExtentColor.RED);
-        testReport.get().log(Status.FAIL, markup);
     }
 
     public void onTestSkipped(ITestResult result) {

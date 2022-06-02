@@ -1,6 +1,7 @@
 package utilities;
 
 import base.TestBase;
+import extentlisteners.ExtentListeners;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -13,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
 
+import static extentlisteners.ExtentListeners.testReport;
 import static utilities.DriverFactory.getDriver;
 
 public class TestUtil extends TestBase {
@@ -32,6 +34,7 @@ public class TestUtil extends TestBase {
 
 //		test.log(LogStatus.INFO, "Screenshot captured");
 //		test.log(LogStatus.INFO, test.addScreenCapture("screenshot/" + TestUtil.screeshotName));
+		testReport.get().info("Screenshot captured");
 		log.debug("Screenshot captured. -> target/screenshot/" + screeshotName);
 		System.out.print(ANSI_RED + "Screenshot captured. -> target/screenshot/" + screeshotName + "\n" + ANSI_RESET);
 	}
