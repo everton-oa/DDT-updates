@@ -1,5 +1,6 @@
 package base;
 
+import com.aventstack.extentreports.MediaEntityBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -10,6 +11,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import static base.TestBase.log;
+import static extentlisteners.ExtentListeners.testReport;
 import static org.testng.Assert.assertEquals;
 import static utilities.DriverFactory.getDriver;
 
@@ -32,8 +35,8 @@ public class PageBase {
         } else if (locator.endsWith("_ID")) {
             getDriver().findElement(By.id(TestBase.OR.getProperty(locator))).click();
         }
-//        TestBase.test.log(LogStatus.INFO, "Clicked on " + locator);
-        TestBase.log.debug("Clicked on " + locator);
+        testReport.get().info("Clicked on " + locator);
+        log.debug("Clicked on " + locator);
         System.out.print(TestBase.ANSI_GREEN + "Clicked on " + locator + "\n" + TestBase.ANSI_RESET);
     }
 
@@ -48,8 +51,8 @@ public class PageBase {
             getDriver().findElement(By.id(TestBase.OR.getProperty(locator))).clear();
             getDriver().findElement(By.id(TestBase.OR.getProperty(locator))).sendKeys(value);
         }
-//        TestBase.test.log(LogStatus.INFO, "Typed " + value + " on " + locator);
-        TestBase.log.debug("Typed " + value + " on " + locator);
+        testReport.get().info("Typed " + value + " on " + locator);
+        log.debug("Typed " + value + " on " + locator);
         System.out.print(TestBase.ANSI_GREEN + "Typed " + value + " on " + locator + "\n" + TestBase.ANSI_RESET);
     }
 
@@ -67,8 +70,8 @@ public class PageBase {
         Select select = new Select(dropdown);
         select.selectByVisibleText(value);
 
-//        TestBase.test.log(LogStatus.INFO, "Selected " + value + " from " + locator);
-        TestBase.log.debug("Selected " + value + " from " + locator);
+        testReport.get().info("Selected " + value + " from " + locator);
+        log.debug("Selected " + value + " from " + locator);
         System.out.print(TestBase.ANSI_GREEN + "Selected " + value + " from " + locator + "\n" + TestBase.ANSI_RESET);
     }
 
@@ -95,27 +98,34 @@ public class PageBase {
     public void verifyEquals(String actual, String expected) throws IOException {
         try {
             assertEquals(actual, expected);
-//            TestBase.test.log(LogStatus.PASS, "Verification successfully executed - Actual result: " + actual + " => Expected result: " + expected);
-            TestBase.log.debug("Verification successfully executed - Actual result: " + actual + " => Expected result: " + expected);
+            testReport.get().warning("Verification successfully executed - Actual result: " + actual + " => Expected result: " + expected);
+            log.debug("Verification successfully executed - Actual result: " + actual + " => Expected result: " + expected);
             System.out.print(TestBase.ANSI_GREEN + "Verification successfully executed - Actual result: " + actual + " => Expected result: " + expected + "\n" + TestBase.ANSI_RESET);
         } catch (Throwable failure) {
-//            TestBase.test.log(LogStatus.WARNING, "Verification failed - " + failure.getMessage());
-            TestBase.log.debug("Verification failed - " + failure.getMessage());
+            testReport.get().warning("Verification failed - " + failure.getMessage());
+            log.debug("Verification failed - " + failure.getMessage());
             System.out.print(TestBase.ANSI_RED + "Verification failed - " + failure.getMessage() + "\n" + TestBase.ANSI_RESET);
 
             TestUtil.captureScreenShoot();
+            try {
+                testReport.get().info("<b>" + "<font color=" + "red>" + "Screenshot of failure" + "</font>" + "</b>",
+                        MediaEntityBuilder.createScreenCaptureFromPath(TestUtil.screeshotPath+TestUtil.screeshotName)
+                                .build());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     public void assertStringEquals(String actual, String expected) throws IOException {
         try {
             assertEquals(actual, expected);
-//            TestBase.test.log(LogStatus.PASS, "Verification successfully executed - Actual result: " + actual + " => Expected result: " + expected);
-            TestBase.log.debug("Verification successfully executed - Actual result: " + actual + " => Expected result: " + expected);
+            testReport.get().info("Verification successfully executed - Actual result: " + actual + " => Expected result: " + expected);
+            log.debug("Verification successfully executed - Actual result: " + actual + " => Expected result: " + expected);
             System.out.print(TestBase.ANSI_GREEN + "Validation successfully executed - Actual result: " + actual + " => Expected result: " + expected + "\n" + TestBase.ANSI_RESET);
         } catch (Throwable failure) {
-//            TestBase.test.log(LogStatus.WARNING, "Verification failed - " + failure.getMessage());
-            TestBase.log.debug("Verification failed - " + failure.getMessage());
+            testReport.get().info("Verification failed - " + failure.getMessage());
+            log.debug("Verification failed - " + failure.getMessage());
             System.out.print(TestBase.ANSI_RED + "Validation failed - " + failure.getMessage() + "\n" + TestBase.ANSI_RESET);
 
             TestUtil.captureScreenShoot();

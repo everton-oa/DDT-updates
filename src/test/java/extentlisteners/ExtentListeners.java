@@ -2,6 +2,7 @@ package extentlisteners;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.Markup;
@@ -40,9 +41,10 @@ public class ExtentListeners implements ITestListener {
 
     public void onTestFailure(ITestResult result) {
         String failMessage = "<b>TEST CASE: " + result.getMethod().getMethodName() + " FAILED</b>";
-        System.out.print(ANSI_RED + "(!) " + result.getName() + " FAILED\n"+ ANSI_RESET);
         Markup markup = MarkupHelper.createLabel(failMessage, ExtentColor.RED);
         testReport.get().log(Status.FAIL, markup);
+        log.debug("(!) " + result.getName() + " FAILED");
+        System.out.print(ANSI_RED + "(!) " + result.getName() + " FAILED\n"+ ANSI_RESET);
 
         try {
             TestUtil.captureScreenShoot();
@@ -50,7 +52,13 @@ public class ExtentListeners implements ITestListener {
             e.printStackTrace();
         }
 
-
+        try {
+            testReport.get().info("<b>" + "<font color=" + "red>" + "Screenshot of failure" + "</font>" + "</b>",
+                    MediaEntityBuilder.createScreenCaptureFromPath(TestUtil.screeshotPath+TestUtil.screeshotName)
+                            .build());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         String exceptionMessage = Arrays.toString(result.getThrowable().getStackTrace());
         testReport.get().info("<details>" + "<summary>" + "<b>" + "<font color=" + "red>" + "Exception Occured: Click here to see"
                 + "</font>" + "</b >" + "</summary>" + exceptionMessage.replaceAll(",", "<br>") + "</details>" + " \n");
@@ -69,7 +77,7 @@ public class ExtentListeners implements ITestListener {
     public void onTestSkipped(ITestResult result) {
         String methodName = result.getMethod().getMethodName();
         String logText = "<b>Test Case: " + methodName + " SKIPPED. Runner mode is NO</b>";
-        Markup markup = MarkupHelper.createLabel(logText, ExtentColor.YELLOW);
+        Markup markup = MarkupHelper.createLabel(logText, ExtentColor.AMBER);
         testReport.get().skip(markup);
         log.debug(result.getName() + " SKIPPED. Runner mode is NO ");
         System.out.print(ANSI_BLUE + "(!) " + result.getName() + " SKIPPED. Runner mode is NO \n" + ANSI_RESET);
