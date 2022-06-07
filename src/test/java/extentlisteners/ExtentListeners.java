@@ -62,16 +62,6 @@ public class ExtentListeners implements ITestListener {
         String exceptionMessage = Arrays.toString(result.getThrowable().getStackTrace());
         testReport.get().info("<details>" + "<summary>" + "<b>" + "<font color=" + "red>" + "Exception Occured: Click here to see"
                 + "</font>" + "</b >" + "</summary>" + exceptionMessage.replaceAll(",", "<br>") + "</details>" + " \n");
-	/*	try {
-
-			ExtentManager.captureScreenshot();
-			testReport.get().fail("<b>" + "<font color=" + "red>" + "Screenshot of failure" + "</font>" + "</b>",
-					MediaEntityBuilder.createScreenCaptureFromPath(ExtentManager.screenshotName)
-							.build());
-		} catch (IOException e) {
-
-		}*/
-
     }
 
     public void onTestSkipped(ITestResult result) {
