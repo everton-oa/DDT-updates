@@ -2,9 +2,7 @@
 <suite name="Data Driven Test Framework">
 
 <listeners>
-<listener class-name="org.uncommons.reportng.HTMLReporter"/>
-<listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
-<listener class-name="listeners.CustomListener"/>
+<listener class-name="extentlisteners.ExtentListeners"/>
 </listeners>
 
 	<test name="Customer Test">

@@ -15,7 +15,8 @@ public class ReportFailedAndSkippedTest extends TestBase {
 	@Test
 	public void ReportFailedTest() throws IOException {
 		// soft assertion to capture screenshot
-		homeLoginPage.verifyEquals("1", "2");
+		homeLoginPage.openHomePageUrl(config.getProperty("testurl"))
+				.verifyEquals("1", "2");
 		Assert.fail();
 	}
 	
