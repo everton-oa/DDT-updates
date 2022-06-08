@@ -29,6 +29,7 @@ public class ExtentListeners implements ITestListener {
         ExtentTest test = extent.createTest(result.getTestClass().getName() + " | @TestCase: " + result.getMethod().getMethodName());
         testReport.set(test);
         testReport.get().info(result.getName() + " started");
+        log.debug(result.getName() + " started");
         System.out.print(ANSI_GREEN + "====================> " + result.getName() + " started \n"+ ANSI_RESET);
     }
 
@@ -36,6 +37,7 @@ public class ExtentListeners implements ITestListener {
         String logText = "<b>TEST CASE: " + result.getMethod().getMethodName() + " PASSED</b>";
         Markup markup = MarkupHelper.createLabel(logText, ExtentColor.GREEN);
         testReport.get().pass(markup);
+        log.debug("====================> " + result.getName() + " successfully executed");
         System.out.print(ANSI_GREEN + "====================> " + result.getName() + " successfully executed\n"+ ANSI_RESET);
     }
 
