@@ -1,4 +1,4 @@
-# Data Driven Framework
+# Data Driven Framework - With Extent Reports Updated
 
 ## General info
 This project is for training purposes.
@@ -40,6 +40,6 @@ This project is for training purposes.
 * Screenshot Utils
 
 ## How to run
-* Step by step
-WIP
-
+* ###Install Maven If maven is not already installed
+* Java tests are located in DDT-updates folder
+* In order to run all the tests simply go to the folder and use mvn test.  
