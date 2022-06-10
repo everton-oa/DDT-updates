@@ -1,5 +1,6 @@
 package utilities;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -12,7 +13,8 @@ public class DriverFactory {
 
     public static WebDriver getDriver() {
         if (driver == null) {
-            System.setProperty("webdriver.chrome.driver", "/home/everton/apps/drivers/chromedriver");
+            WebDriverManager.chromedriver().setup();
+//            System.setProperty("webdriver.chrome.driver", "/home/everton/apps/drivers/chromedriver");
             driver = new ChromeDriver();
             // TODO adicionar logica para escolher driver chrome/firefox/ie
         }
