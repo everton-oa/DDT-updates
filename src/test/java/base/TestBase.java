@@ -2,6 +2,7 @@ package base;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -12,6 +13,8 @@ import utilities.ExcelReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -59,7 +62,20 @@ public class TestBase {
 
     @BeforeMethod
     public void setUp() {
-//        getDriver().manage().window().maximize();
+
+        // add preferences to chrome to avoid notifications, extensions and infobars
+        Map<String, Object> prefs = new HashMap<String, Object>();
+        prefs.put("profile.default_content_setting_value.notifications", 2);
+        prefs.put("credentials_enable_service", false);
+        prefs.put("profile.password_manager_enabled", false);
+
+        ChromeOptions options = new ChromeOptions();
+        options.setExperimentalOption("prefs", prefs);
+        options.addArguments("--disable-extensions");
+        options.addArguments("--disable-infobars");
+
+        // getDriver().manage().window().maximize();
+        // open webdriver in the second screen
         getDriver().manage().window().setPosition(new Point(2000, 1));
         getDriver().manage().timeouts().implicitlyWait(Integer.parseInt(config.getProperty("implicit.wait")), TimeUnit.SECONDS);
         wait = new WebDriverWait(getDriver(), 2);
